@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SearchInML</string>
     <string name="nuevo">Nuevo</string>
     <string name="condition">Condición</string>
     <string name="used">Usado</string>
