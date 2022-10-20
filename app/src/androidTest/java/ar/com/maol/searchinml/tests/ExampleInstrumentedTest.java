@@ -1,4 +1,4 @@
-package ar.com.maol.searchinml;
+package ar.com.maol.searchinml.tests;
 
 import android.content.Context;
 

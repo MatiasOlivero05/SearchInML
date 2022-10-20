@@ -11,9 +11,14 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
-
+        testApplicationId "ar.com.maol.searchinml.tests"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    testOptions{
+        reportDir = "$project.buildDir/results/report"
+        resultsDir = "$project.buildDir/results"
+     }
 
     buildTypes {
         release {
