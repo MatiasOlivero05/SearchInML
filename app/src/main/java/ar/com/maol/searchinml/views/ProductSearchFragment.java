@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,10 +19,11 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import ar.com.maol.searchinml.R;
 import ar.com.maol.searchinml.adapters.ProductSearchResultsAdapter;
+import ar.com.maol.searchinml.models.Result;
 import ar.com.maol.searchinml.models.ResultsResponse;
 import ar.com.maol.searchinml.viewmodels.ProductSearchViewModel;
 
-public class ProductSearchFragment  extends Fragment {
+public class ProductSearchFragment  extends Fragment implements ProductSearchResultsAdapter.ItemClickListener {
     private ProductSearchViewModel viewModel;
     private ProductSearchResultsAdapter adapter;
 
@@ -33,6 +35,7 @@ public class ProductSearchFragment  extends Fragment {
         super.onCreate(savedInstanceState);
 
         adapter = new ProductSearchResultsAdapter();
+        adapter.setClickListener(this);
 
         viewModel = ViewModelProviders.of(this).get(ProductSearchViewModel.class);
         viewModel.init();
@@ -41,6 +44,8 @@ public class ProductSearchFragment  extends Fragment {
             public void onChanged(ResultsResponse resultsResponse) {
                 if (resultsResponse != null) {
                     adapter.setResults(resultsResponse.getResults());
+                }else{
+                    //TODO NO SE ENCONTRARON RESULTADOS O FALLO
                 }
             }
         });
@@ -72,5 +77,10 @@ public class ProductSearchFragment  extends Fragment {
         String keyword = keywordEditText.getEditableText().toString();
 
         viewModel.searchVolumes(keyword);
+    }
+
+    @Override
+    public void onItemClick(Result result) {
+        Toast.makeText(getContext(), "Result: " + result.getTitle(), Toast.LENGTH_LONG ).show();
     }
 }

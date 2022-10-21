@@ -21,6 +21,7 @@ import ar.com.maol.searchinml.util.Constants;
 
 public class ProductSearchResultsAdapter extends RecyclerView.Adapter<ProductSearchResultsAdapter.ProductoSearchResultHolder> {
     private List<Result> results = new ArrayList<>();
+    private ItemClickListener mClickListener;
 
     @NonNull
     @Override
@@ -50,7 +51,7 @@ public class ProductSearchResultsAdapter extends RecyclerView.Adapter<ProductSea
         }else{
             title = Resources.getSystem().getString(R.string.not_title);
         }
-        holder.productTitleTextView.setText(result.getTitle());
+        holder.productTitleTextView.setText(title);
 
         //SUBTITLE
         String currency;
@@ -92,7 +93,7 @@ public class ProductSearchResultsAdapter extends RecyclerView.Adapter<ProductSea
         notifyDataSetChanged();
     }
 
-    class ProductoSearchResultHolder extends RecyclerView.ViewHolder {
+    class ProductoSearchResultHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView productTitleTextView;
         private TextView productSubtitleTextView;
         private TextView productDescriptionTextView;
@@ -105,6 +106,21 @@ public class ProductSearchResultsAdapter extends RecyclerView.Adapter<ProductSea
             productSubtitleTextView = itemView.findViewById(R.id.product_item_subtitle);
             productDescriptionTextView = itemView.findViewById(R.id.product_item_description);
             smallThumbnailImageView = itemView.findViewById(R.id.book_item_smallThumbnail);
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            if (mClickListener != null) mClickListener.onItemClick(results.get(getAdapterPosition()));
+        }
+    }
+
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
+
+    public interface ItemClickListener {
+        void onItemClick(Result result);
     }
 }
