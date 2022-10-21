@@ -12,15 +12,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.Gson;
 
 import ar.com.maol.searchinml.R;
 import ar.com.maol.searchinml.adapters.ProductSearchResultsAdapter;
 import ar.com.maol.searchinml.models.Result;
 import ar.com.maol.searchinml.models.ResultsResponse;
+import ar.com.maol.searchinml.util.Constants;
 import ar.com.maol.searchinml.viewmodels.ProductSearchViewModel;
 
 public class ProductSearchFragment  extends Fragment implements ProductSearchResultsAdapter.ItemClickListener {
@@ -69,7 +72,6 @@ public class ProductSearchFragment  extends Fragment implements ProductSearchRes
                 performSearch();
             }
         });
-
         return view;
     }
 
@@ -82,5 +84,11 @@ public class ProductSearchFragment  extends Fragment implements ProductSearchRes
     @Override
     public void onItemClick(Result result) {
         Toast.makeText(getContext(), "Result: " + result.getTitle(), Toast.LENGTH_LONG ).show();
+
+        Gson gson = new Gson();
+        Bundle bundle = new Bundle();
+        String jsonResul = gson.toJson(result);
+        bundle.putString(Constants.ARG_RESULT, jsonResul);
+        Navigation.findNavController(getActivity(),R.id.activity_main_navhostfragment).navigate(R.id.detailProductFragment, bundle);
     }
 }
