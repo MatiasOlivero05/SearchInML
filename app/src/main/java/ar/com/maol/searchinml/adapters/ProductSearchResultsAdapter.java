@@ -105,7 +105,7 @@ public class ProductSearchResultsAdapter extends RecyclerView.Adapter<ProductSea
             productTitleTextView = itemView.findViewById(R.id.product_item_title);
             productSubtitleTextView = itemView.findViewById(R.id.product_item_subtitle);
             productDescriptionTextView = itemView.findViewById(R.id.product_item_description);
-            smallThumbnailImageView = itemView.findViewById(R.id.book_item_smallThumbnail);
+            smallThumbnailImageView = itemView.findViewById(R.id.product_item_smallThumbnail);
 
             itemView.setOnClickListener(this);
         }

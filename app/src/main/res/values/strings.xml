@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SearchInML</string>
+    <string name="app_name">Buscar en Mercado Libre</string>
     <string name="nuevo">Nuevo</string>
     <string name="condition">Condición</string>
     <string name="used">Usado</string>
@@ -7,6 +7,8 @@
     <string name="not_symbol_currency">(Sin símbolo de moneda)</string>
     <string name="not_title">(Sin título)</string>
     <string name="search_product">Busqueda de productos</string>
-    <string name="input_keyword">Ingresá el producto</string>
+    <string name="input_keyword">Buscar</string>
     <string name="search">Buscar</string>
+    <string name="debe_ingresar_algun_producto">Debés ingresar algún producto.</string>
+    <string name="ups_ocurrio_algo_fallo_volve_a_intentarlo">Ups ! Algo falló. Volve a intentarlo.</string>
 </resources>
