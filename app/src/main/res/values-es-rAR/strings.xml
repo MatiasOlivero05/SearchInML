@@ -12,4 +12,6 @@
     <string name="search">Buscar</string>
     <string name="debe_ingresar_algun_producto">Debés ingresar algún producto.</string>
     <string name="ups_ocurrio_algo_fallo_volve_a_intentarlo">Ups ! Algo falló. Volve a intentarlo.</string>
+    <string name="acepta_ml">Acepta Mercado Pago</string>
+    <string name="no_acepta_ml">No acepta Mercado Pago</string>
 </resources>

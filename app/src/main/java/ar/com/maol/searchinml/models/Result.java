@@ -36,6 +36,10 @@ public class Result {
     @Expose
     private boolean accepts_mercadopago;
 
+    @SerializedName("seller_address")
+    @Expose
+    private SellerAddress seller_address;
+
     public String getId() {
         return id;
     }
@@ -98,5 +102,13 @@ public class Result {
 
     public void setAccepts_mercadopago(boolean accepts_mercadopago) {
         this.accepts_mercadopago = accepts_mercadopago;
+    }
+
+    public SellerAddress getSeller_address() {
+        return seller_address;
+    }
+
+    public void setSeller_address(SellerAddress seller_address) {
+        this.seller_address = seller_address;
     }
 }

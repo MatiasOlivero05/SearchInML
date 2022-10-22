@@ -61,13 +61,13 @@ public class ProductSearchFragment  extends Fragment implements ProductSearchRes
                     searchImageButton.setVisibility(View.GONE);
                     adapter.setResults(resultsResponse.getResults());
                     try {
-                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                        InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
                         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }else{
-                    Toast.makeText(getContext(), getContext().getResources().getString(R.string.ups_ocurrio_algo_fallo_volve_a_intentarlo), Toast.LENGTH_LONG ).show();
+                    Toast.makeText(getContext(), requireContext().getResources().getString(R.string.ups_ocurrio_algo_fallo_volve_a_intentarlo), Toast.LENGTH_LONG ).show();
                     searchImageButton.setVisibility(View.VISIBLE);
                 }
             }
@@ -141,8 +141,6 @@ public class ProductSearchFragment  extends Fragment implements ProductSearchRes
 
     @Override
     public void onItemClick(Result result) {
-        Toast.makeText(getContext(), "Result: " + result.getTitle(), Toast.LENGTH_LONG ).show();
-
         Gson gson = new Gson();
         Bundle bundle = new Bundle();
         String jsonResul = gson.toJson(result);

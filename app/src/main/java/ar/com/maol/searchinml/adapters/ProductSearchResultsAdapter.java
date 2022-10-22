@@ -17,7 +17,7 @@ import java.util.List;
 
 import ar.com.maol.searchinml.R;
 import ar.com.maol.searchinml.models.Result;
-import ar.com.maol.searchinml.util.Constants;
+import ar.com.maol.searchinml.util.Util;
 
 public class ProductSearchResultsAdapter extends RecyclerView.Adapter<ProductSearchResultsAdapter.ProductoSearchResultHolder> {
     private List<Result> results = new ArrayList<>();
@@ -54,31 +54,10 @@ public class ProductSearchResultsAdapter extends RecyclerView.Adapter<ProductSea
         holder.productTitleTextView.setText(title);
 
         //SUBTITLE
-        String currency;
-        if (result.getCurrency_id() != null && !result.getCurrency_id().isEmpty()) {
-            currency = result.getCurrency_id().equals(Constants.CURRENCY_ID_ARG) ? Constants.CURRENCY_SYMBOL_CURRENCY_ARG : result.getCurrency_id();
-        }else{
-            currency = Resources.getSystem().getString(R.string.not_symbol_currency);
-        }
-        holder.productSubtitleTextView.setText(new StringBuilder().append(currency).append(" ").append(result.getPrice()).toString());
-
+        holder.productSubtitleTextView.setText(Util.getStringCurrencyAndPriceFormated(result.getCurrency_id(), result.getPrice()));
 
         // DESCRITION
-        String condition;
-        StringBuilder sbCondition = new StringBuilder().append(holder.itemView.getContext().getString(R.string.condition)).append(": ");
-        if (result.getCondition() != null && !result.getCondition().isEmpty()) {
-            if(result.getCondition().equals(Constants.CONDITION_NEW)){
-                condition = sbCondition.append(holder.itemView.getContext().getString(R.string.nuevo)).toString();
-            }else {
-                if(result.getCondition().equals(Constants.CONDITION_USED)){
-                    condition = sbCondition.append(holder.itemView.getContext().getString(R.string.used)).toString();
-                }else {
-                    condition = sbCondition.append(holder.itemView.getContext().getString(R.string.unknown)).toString();
-                }
-            }
-        }else {
-            condition = sbCondition.append(holder.itemView.getContext().getString(R.string.unknown)).toString();
-        }
+        String condition = Util.getStringCondition(holder.itemView.getContext(), result.getCondition());
         holder.productDescriptionTextView.setText(condition);
 
     }
@@ -105,7 +84,7 @@ public class ProductSearchResultsAdapter extends RecyclerView.Adapter<ProductSea
             productTitleTextView = itemView.findViewById(R.id.product_item_title);
             productSubtitleTextView = itemView.findViewById(R.id.product_item_subtitle);
             productDescriptionTextView = itemView.findViewById(R.id.product_item_description);
-            smallThumbnailImageView = itemView.findViewById(R.id.product_item_smallThumbnail);
+            smallThumbnailImageView = itemView.findViewById(R.id.product_item_thumbnail);
 
             itemView.setOnClickListener(this);
         }
