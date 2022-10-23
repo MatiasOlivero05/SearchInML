@@ -1,9 +1,7 @@
 package ar.com.maol.searchinml.views;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-
 import ar.com.maol.searchinml.R;
 
 public class MainActivity extends AppCompatActivity {
