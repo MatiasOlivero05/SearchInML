@@ -1,6 +1,8 @@
 package ar.com.maol.searchinml.views;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,71 +56,79 @@ public class DetailProductFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_detail_product, container, false);
 
 
-        ImageView fragment_detail_product_thumbnail = view.findViewById(R.id.fragment_detail_product_thumbnail);
+        ImageView fragment_detail_product_thumbnailImageView = view.findViewById(R.id.fragment_detail_product_thumbnail);
         if (mResult.getThumbnail() != null && !mResult.getThumbnail().isEmpty()) {
             String imageUrl = mResult.getThumbnail().replace("http://", "https://");
             Glide.with(view)
                     .load(imageUrl)
-                    .into(fragment_detail_product_thumbnail);
+                    .fitCenter()
+                    .into(fragment_detail_product_thumbnailImageView);
         }
 
-        TextView fragment_detail_product_title = view.findViewById(R.id.fragment_detail_product_title);
+        TextView fragmentDetailProductTitleTextView = view.findViewById(R.id.fragment_detail_product_title);
         try {
-            fragment_detail_product_title.setText(mResult.getTitle());
+            fragmentDetailProductTitleTextView.setText(mResult.getTitle());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        TextView fragment_detail_product_price = view.findViewById(R.id.fragment_detail_product_price);
+        TextView fragmentDetailProductPriceTextView = view.findViewById(R.id.fragment_detail_product_price);
         try {
-            fragment_detail_product_price.setText(Util.getStringCurrencyAndPriceFormated(mResult.getCurrency_id(), mResult.getPrice()));
+            fragmentDetailProductPriceTextView.setText(Util.getStringCurrencyAndPriceFormated(mResult.getCurrency_id(), mResult.getPrice()));
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        TextView fragment_detail_product_condition = view.findViewById(R.id.fragment_detail_product_condition);
+        TextView fragmentDetailProductConditionTextView = view.findViewById(R.id.fragment_detail_product_condition);
         try {
             String condition = Util.getStringCondition(requireContext(), mResult.getCondition());
-            fragment_detail_product_condition.setText(condition);
+            fragmentDetailProductConditionTextView.setText(condition);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        TextView fragment_detail_product_accepts_mercadopago = view.findViewById(R.id.fragment_detail_product_accepts_mercadopago);
+        TextView fragmentDetailProductAcceptsMercadopagoTextView = view.findViewById(R.id.fragment_detail_product_accepts_mercadopago);
         try {
             if (mResult.isAccepts_mercadopago()) {
-                fragment_detail_product_accepts_mercadopago.setText(requireContext().getResources().getString(R.string.acepta_ml));
-                fragment_detail_product_accepts_mercadopago.setTextColor(Color.GREEN);
+                fragmentDetailProductAcceptsMercadopagoTextView.setText(requireContext().getResources().getString(R.string.acepta_ml));
+                fragmentDetailProductAcceptsMercadopagoTextView.setTextColor(Color.rgb(131,177,244));
             } else {
-                fragment_detail_product_accepts_mercadopago.setText(requireContext().getResources().getString(R.string.no_acepta_ml));
-                fragment_detail_product_accepts_mercadopago.setTextColor(Color.DKGRAY);
+                fragmentDetailProductAcceptsMercadopagoTextView.setText(requireContext().getResources().getString(R.string.no_acepta_ml));
+                fragmentDetailProductAcceptsMercadopagoTextView.setTextColor(Color.DKGRAY);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        TextView fragment_detail_product_seller_address = view.findViewById(R.id.fragment_detail_product_seller_address);
+        TextView fragmentDetailProductSellerAddressTextView = view.findViewById(R.id.fragment_detail_product_seller_address);
         try {
-            if (mResult.getSeller_address() != null
-                    && mResult.getSeller_address().getCity() != null && !mResult.getSeller_address().getCity().getName().isEmpty()
-                    && mResult.getSeller_address().getState() != null && !mResult.getSeller_address().getState().getName().isEmpty()
-                    && mResult.getSeller_address().getCountry() != null && !mResult.getSeller_address().getCountry().getName().isEmpty()) {
-
-                StringBuilder sbSellerAddress = new StringBuilder().append(mResult.getSeller_address().getCity().getName()).append(" ").append(mResult.getSeller_address().getState().getName()).append(" ").append(mResult.getSeller_address().getCountry().getName());
-                fragment_detail_product_seller_address.setText(sbSellerAddress.toString());
+            String adressFormated = Util.getStringAdressFormated(mResult.getSeller_address());
+            if (!adressFormated.isEmpty()){
+                fragmentDetailProductSellerAddressTextView.setText(adressFormated);
             } else {
-                fragment_detail_product_seller_address.setVisibility(View.GONE);
+                fragmentDetailProductSellerAddressTextView.setVisibility(View.GONE);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        TextView fragment_detail_product_permalink = view.findViewById(R.id.fragment_detail_product_permalink);
+        Button fragmentDetailProductPermalinkButton = view.findViewById(R.id.fragment_detail_product_permalink);
         try {
             if (mResult.getPermalink() != null && !mResult.getPermalink().isEmpty()) {
-                fragment_detail_product_permalink.setText(mResult.getPermalink());
+                fragmentDetailProductPermalinkButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        try {
+                            Uri uri = Uri.parse(mResult.getPermalink());
+                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             } else {
-                fragment_detail_product_permalink.setVisibility(View.GONE);
+                fragmentDetailProductPermalinkButton.setVisibility(View.GONE);
             }
         } catch (Exception e) {
             e.printStackTrace();

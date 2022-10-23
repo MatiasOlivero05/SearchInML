@@ -2,7 +2,7 @@ package ar.com.maol.searchinml.views;
 
 
 import android.app.Activity;
-import android.content.Context;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,7 +10,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
@@ -29,27 +28,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
-import java.util.Objects;
-
 import ar.com.maol.searchinml.R;
 import ar.com.maol.searchinml.adapters.ProductSearchResultsAdapter;
 import ar.com.maol.searchinml.models.Result;
 import ar.com.maol.searchinml.models.ResultsResponse;
 import ar.com.maol.searchinml.util.Constants;
+import ar.com.maol.searchinml.util.Util;
 import ar.com.maol.searchinml.viewmodels.ProductSearchViewModel;
 
 public class ProductSearchFragment  extends Fragment implements ProductSearchResultsAdapter.ItemClickListener {
     private ProductSearchViewModel viewModel;
     private ProductSearchResultsAdapter adapter;
 
+    AlertDialog alertDialogLoading;
     private TextInputEditText keywordEditText;
     private ImageButton searchImageButton;
+    CharSequence lastCharSequence;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        adapter = new ProductSearchResultsAdapter();
+        adapter = new ProductSearchResultsAdapter(requireContext());
         adapter.setClickListener(this);
 
         viewModel = ViewModelProviders.of(this).get(ProductSearchViewModel.class);
@@ -57,6 +57,9 @@ public class ProductSearchFragment  extends Fragment implements ProductSearchRes
         viewModel.getResultsResponseLiveData().observe(this, new Observer<ResultsResponse>() {
             @Override
             public void onChanged(ResultsResponse resultsResponse) {
+                if (alertDialogLoading != null && alertDialogLoading.isShowing()) {
+                    alertDialogLoading.dismiss();
+                }
                 if (resultsResponse != null && resultsResponse.getResults() != null && resultsResponse.getResults().size() > 0) {
                     searchImageButton.setVisibility(View.GONE);
                     adapter.setResults(resultsResponse.getResults());
@@ -83,6 +86,7 @@ public class ProductSearchFragment  extends Fragment implements ProductSearchRes
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
+        alertDialogLoading = Util.getAlertDialogLoading(requireContext()).create();
         keywordEditText = view.findViewById(R.id.fragment_productsearch_keyword);
         searchImageButton = view.findViewById(R.id.fragment_productsearch_search);
 
@@ -99,8 +103,11 @@ public class ProductSearchFragment  extends Fragment implements ProductSearchRes
                         searchImageButton.setVisibility(View.GONE);
                     }
                 }else{
-                    if (searchImageButton.getVisibility() != View.VISIBLE) {
-                        searchImageButton.setVisibility(View.VISIBLE);
+                    if (lastCharSequence == null || !charSequence.toString().equals(lastCharSequence.toString())) {
+                        lastCharSequence = charSequence;
+                        if (searchImageButton.getVisibility() != View.VISIBLE) {
+                            searchImageButton.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
             }
@@ -116,6 +123,9 @@ public class ProductSearchFragment  extends Fragment implements ProductSearchRes
             @Override
             public void onClick(View v) {
                 searchImageButton.setVisibility(View.GONE);
+                if (alertDialogLoading != null && !alertDialogLoading.isShowing()) {
+                    alertDialogLoading.show();
+                }
                 performSearch();
             }
         });
@@ -125,6 +135,9 @@ public class ProductSearchFragment  extends Fragment implements ProductSearchRes
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     searchImageButton.setVisibility(View.GONE);
+                    if (alertDialogLoading != null && !alertDialogLoading.isShowing()) {
+                        alertDialogLoading.show();
+                    }
                     performSearch();
                     return true;
                 }

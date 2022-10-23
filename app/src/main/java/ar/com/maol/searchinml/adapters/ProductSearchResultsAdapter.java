@@ -1,6 +1,6 @@
 package ar.com.maol.searchinml.adapters;
 
-import android.content.res.Resources;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +22,11 @@ import ar.com.maol.searchinml.util.Util;
 public class ProductSearchResultsAdapter extends RecyclerView.Adapter<ProductSearchResultsAdapter.ProductoSearchResultHolder> {
     private List<Result> results = new ArrayList<>();
     private ItemClickListener mClickListener;
+    private Context context;
+
+    public ProductSearchResultsAdapter(Context context) {
+        this.context = context;
+    }
 
     @NonNull
     @Override
@@ -44,21 +49,21 @@ public class ProductSearchResultsAdapter extends RecyclerView.Adapter<ProductSea
                     .into(holder.smallThumbnailImageView);
         }
 
+        //CONDITION
+        String condition = Util.getStringCondition(holder.itemView.getContext(), result.getCondition());
+        holder.productConditionTextView.setText(condition);
+
         //TITLE
         String title;
         if (result.getTitle() != null && !result.getTitle().isEmpty()) {
             title = result.getTitle();
         }else{
-            title = Resources.getSystem().getString(R.string.not_title);
+            title = context.getResources().getString(R.string.not_title);
         }
         holder.productTitleTextView.setText(title);
 
-        //SUBTITLE
-        holder.productSubtitleTextView.setText(Util.getStringCurrencyAndPriceFormated(result.getCurrency_id(), result.getPrice()));
-
-        // DESCRITION
-        String condition = Util.getStringCondition(holder.itemView.getContext(), result.getCondition());
-        holder.productDescriptionTextView.setText(condition);
+        // PRICE
+        holder.productPriceTextView.setText(Util.getStringCurrencyAndPriceFormated(result.getCurrency_id(), result.getPrice()));
 
     }
 
@@ -73,18 +78,18 @@ public class ProductSearchResultsAdapter extends RecyclerView.Adapter<ProductSea
     }
 
     class ProductoSearchResultHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView productTitleTextView;
-        private TextView productSubtitleTextView;
-        private TextView productDescriptionTextView;
         private ImageView smallThumbnailImageView;
+        private TextView productConditionTextView;
+        private TextView productTitleTextView;
+        private TextView productPriceTextView;
 
         public ProductoSearchResultHolder(@NonNull View itemView) {
             super(itemView);
 
-            productTitleTextView = itemView.findViewById(R.id.product_item_title);
-            productSubtitleTextView = itemView.findViewById(R.id.product_item_subtitle);
-            productDescriptionTextView = itemView.findViewById(R.id.product_item_description);
             smallThumbnailImageView = itemView.findViewById(R.id.product_item_thumbnail);
+            productConditionTextView = itemView.findViewById(R.id.product_item_condition);
+            productTitleTextView = itemView.findViewById(R.id.product_item_title);
+            productPriceTextView = itemView.findViewById(R.id.product_item_price);
 
             itemView.setOnClickListener(this);
         }

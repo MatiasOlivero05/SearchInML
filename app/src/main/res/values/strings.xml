@@ -13,4 +13,6 @@
     <string name="ups_ocurrio_algo_fallo_volve_a_intentarlo">Ups ! Algo falló. Volve a intentarlo.</string>
     <string name="acepta_ml">Acepta Mercado Pago</string>
     <string name="no_acepta_ml">No acepta Mercado Pago</string>
+    <string name="ver_producto_en_mercado_libre">Ver producto en Mercado Libre</string>
+    <string name="cargando">Cargando . . .</string>
 </resources>

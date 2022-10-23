@@ -22,6 +22,7 @@
             android:id="@+id/product_item_thumbnail"
             android:layout_width="80dp"
             android:layout_height="80dp"
+            android:layout_marginTop="8sp"
             android:layout_marginStart="12sp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
@@ -39,27 +40,28 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+
+            <TextView
+                android:id="@+id/product_item_condition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"/>
+
             <TextView
                 android:id="@+id/product_item_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 android:maxLines="2"/>
 
             <TextView
-                android:id="@+id/product_item_subtitle"
+                android:id="@+id/product_item_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="20sp"
+                android:textSize="28sp"
                 android:layout_marginTop="2sp"
                 android:layout_marginBottom="2sp"
-                android:maxLines="1"/>
-
-            <TextView
-                android:id="@+id/product_item_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:maxLines="1"/>
 
         </LinearLayout>
