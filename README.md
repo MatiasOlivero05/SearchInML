@@ -2,15 +2,13 @@
 Búsqueda de productos en Mercado Libre
 
 
-///////////////////////////////////
 Descripción resumida de la APP.
-///////////////////////////////////
+
 Es una aplicación simple que lista productos del país ARGENTINA, consumidos desde una API del Marketplace Mercado Libre. 
 Al hacer click en los productos se muestra más detalle del mismo y permite linkear al Marketplace en el producto seleccionado.
 
-///////////////////////////////////
+
 Descrición técnica del desarrollo.
-///////////////////////////////////
 
 - Aplicación realizada con patrones de diseño MVVM: código más limpio y extensible.
 - Se utilizó la librería Retrofit2 para consumir la API: Por su eficacia, efiencias y se adapta a MVVM.
@@ -23,15 +21,16 @@ Descrición técnica del desarrollo.
 - Se manejan muchos de los posibles errores por objetos o valores nulos o vacíos.
 - Se trató que sea un App con usabilidad simple, clara y acertada.
 
-//////////
-API DATOS
-//////////
+
+
+Datos de la API
+
 GET https://api.mercadolibre.com/sites/MLA/search?q
 
 
-/////////////////
-FALTARÍA AGREGAR
-/////////////////
+
+Faltaría agregar
+
 - Fondo de imagen por default o cuando falle.
 - Mejoras de estilos
 - Agregar más información proporcionada por la API.
