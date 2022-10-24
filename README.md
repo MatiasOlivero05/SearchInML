@@ -17,7 +17,7 @@ Descrición técnica del desarrollo.
   de linkearlo al Marketplace sobre el producto seleccionado.
 - Se utilizó la librería Glide para mostrar en las imágenes desde las URLs en las ImageViews.
 - Se utilizó la librería Gson para el paseo de los Json que devuelve la API y para traspasar datos entre Fragment.
-
+- Se crearon algunos UnitTest y InstrumentedTest.
 - Se manejan muchos de los posibles errores por objetos o valores nulos o vacíos.
 - Se trató que sea un App con usabilidad simple, clara y acertada.
 
