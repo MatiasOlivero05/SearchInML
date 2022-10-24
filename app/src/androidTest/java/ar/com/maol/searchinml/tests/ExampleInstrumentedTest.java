@@ -10,6 +10,8 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
+import ar.com.maol.searchinml.util.Util;
+
 /**
  * Instrumented test, which will execute on an Android device.
  *
@@ -17,10 +19,16 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
+
     @Test
-    public void useAppContext() {
-        // Context of the app under test.
+    public void test_getStringConditionNew() {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("ar.com.maol.searchinml", appContext.getPackageName());
+        assertEquals("Condición: Nuevo", Util.getStringCondition(appContext, "new"));
+    }
+
+    @Test
+    public void test_getStringConditionUsed() {
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        assertEquals("Condición: Usado", Util.getStringCondition(appContext, "used"));
     }
 }

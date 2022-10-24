@@ -66,7 +66,7 @@ public class Util {
         DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.getDefault());
         otherSymbols.setDecimalSeparator(',');
         otherSymbols.setGroupingSeparator('.');
-        DecimalFormat format = new DecimalFormat("###,###,###.#", otherSymbols);
+        DecimalFormat format = new DecimalFormat("###,###,###.##", otherSymbols);
         return format.format(price);
     }
 
