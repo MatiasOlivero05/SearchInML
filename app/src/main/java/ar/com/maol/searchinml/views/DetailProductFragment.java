@@ -56,7 +56,7 @@ public class DetailProductFragment extends Fragment {
 
 
         ImageView fragment_detail_product_thumbnailImageView = view.findViewById(R.id.fragment_detail_product_thumbnail);
-        if (mResult.getThumbnail() != null && !mResult.getThumbnail().isEmpty()) {
+        if (mResult.getThumbnail() != null && !mResult.getThumbnail().isEmpty()  && Util.isValidURL(mResult.getThumbnail())) {
             String imageUrl = mResult.getThumbnail().replace("http://", "https://");
             Glide.with(view)
                     .load(imageUrl)

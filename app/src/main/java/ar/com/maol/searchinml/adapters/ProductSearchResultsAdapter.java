@@ -42,7 +42,7 @@ public class ProductSearchResultsAdapter extends RecyclerView.Adapter<ProductSea
         Result result = results.get(position);
 
         //IMAGE
-        if (result.getThumbnail() != null && !result.getThumbnail().isEmpty()) {
+        if (result.getThumbnail() != null && !result.getThumbnail().isEmpty() && Util.isValidURL(result.getThumbnail())) {
             String imageUrl = result.getThumbnail().replace("http://", "https://");
             Glide.with(holder.itemView)
                     .load(imageUrl)

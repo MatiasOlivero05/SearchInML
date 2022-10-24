@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -116,5 +119,19 @@ public class Util {
             }
         });
         return builder;
+    }
+
+    /**
+     * Se valida si es una URL valida
+     * @param url la URL que se requiera validar
+     * @return true en caso que sea un URL valida o o false en el caso que no lo sea.
+     */
+    public static boolean isValidURL(String url) {
+        try {
+            new URL(url).toURI();
+        } catch (MalformedURLException | URISyntaxException e) {
+            return false;
+        }
+        return true;
     }
 }
