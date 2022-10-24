@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import ar.com.maol.searchinml.R;
 import ar.com.maol.searchinml.adapters.ProductSearchResultsAdapter;
 import ar.com.maol.searchinml.models.Result;
@@ -43,7 +44,7 @@ public class ProductSearchFragment  extends Fragment implements ProductSearchRes
     AlertDialog alertDialogLoading;
     private TextInputEditText keywordEditText;
     private ImageButton searchImageButton;
-    CharSequence lastCharSequence;
+    String sLastCharSequence;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,21 +58,24 @@ public class ProductSearchFragment  extends Fragment implements ProductSearchRes
         viewModel.getResultsResponseLiveData().observe(this, new Observer<ResultsResponse>() {
             @Override
             public void onChanged(ResultsResponse resultsResponse) {
+
                 if (alertDialogLoading != null && alertDialogLoading.isShowing()) {
                     alertDialogLoading.dismiss();
                 }
                 if (resultsResponse != null && resultsResponse.getResults() != null && resultsResponse.getResults().size() > 0) {
                     searchImageButton.setVisibility(View.GONE);
                     adapter.setResults(resultsResponse.getResults());
-                    try {
-                        InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-                        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+
                 }else{
-                    Toast.makeText(getContext(), requireContext().getResources().getString(R.string.ups_ocurrio_algo_fallo_volve_a_intentarlo), Toast.LENGTH_LONG ).show();
                     searchImageButton.setVisibility(View.VISIBLE);
+                    AlertDialog.Builder alertOK = Util.getAlertDialogOk(requireContext(), requireActivity().getResources().getString(R.string.informacion), requireActivity().getResources().getString(R.string.ocurrio_un_error_y_no_hemos_podido_realizar_la_busqueda_solicitada_por_favor_vuelva_a_intentarlo));
+                    alertOK.show();
+                }
+                try {
+                    InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -103,8 +107,8 @@ public class ProductSearchFragment  extends Fragment implements ProductSearchRes
                         searchImageButton.setVisibility(View.GONE);
                     }
                 }else{
-                    if (lastCharSequence == null || !charSequence.toString().equals(lastCharSequence.toString())) {
-                        lastCharSequence = charSequence;
+                    if (sLastCharSequence == null || !charSequence.toString().equals(sLastCharSequence)) {
+                        sLastCharSequence = charSequence.toString();
                         if (searchImageButton.getVisibility() != View.VISIBLE) {
                             searchImageButton.setVisibility(View.VISIBLE);
                         }
@@ -126,6 +130,7 @@ public class ProductSearchFragment  extends Fragment implements ProductSearchRes
                 if (alertDialogLoading != null && !alertDialogLoading.isShowing()) {
                     alertDialogLoading.show();
                 }
+                adapter.setResults(new ArrayList<>());
                 performSearch();
             }
         });
@@ -138,6 +143,7 @@ public class ProductSearchFragment  extends Fragment implements ProductSearchRes
                     if (alertDialogLoading != null && !alertDialogLoading.isShowing()) {
                         alertDialogLoading.show();
                     }
+                    adapter.setResults(new ArrayList<>());
                     performSearch();
                     return true;
                 }

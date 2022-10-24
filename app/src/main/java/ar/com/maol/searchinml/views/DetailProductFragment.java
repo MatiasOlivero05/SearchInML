@@ -27,7 +27,6 @@ import ar.com.maol.searchinml.util.Util;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link DetailProductFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class DetailProductFragment extends Fragment {

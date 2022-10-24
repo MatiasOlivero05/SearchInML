@@ -1,5 +1,6 @@
 package ar.com.maol.searchinml.repositories;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -38,14 +39,14 @@ public class ProductRepository {
         productSearchService.searchResults(keyword)
                 .enqueue(new Callback<ResultsResponse>() {
                     @Override
-                    public void onResponse(Call<ResultsResponse> call, Response<ResultsResponse> response) {
+                    public void onResponse(@NonNull Call<ResultsResponse> call, @NonNull Response<ResultsResponse> response) {
                         if (response.body() != null) {
                             resultsResponseLiveData.postValue(response.body());
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<ResultsResponse> call, Throwable t) {
+                    public void onFailure(@NonNull Call<ResultsResponse> call, @NonNull Throwable t) {
                         resultsResponseLiveData.postValue(null);
                     }
                 });

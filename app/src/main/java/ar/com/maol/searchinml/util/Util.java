@@ -2,6 +2,7 @@ package ar.com.maol.searchinml.util;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 
 import java.text.DecimalFormat;
@@ -93,6 +94,27 @@ public class Util {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setCancelable(false);
         builder.setView(R.layout.progressbar_loading);
+        return builder;
+    }
+
+    /**
+     * Retorna Un AlertDialog con el botón OK, que solamente cierra el mismo. Muestra como título y mensaje los parámetros recibidos. Se debe utilizar para mostrar información simple.
+     * @param context necesario para poder instanciar al AlertDialog.Builder
+     * @param title título que se va a setear.
+     * @param message mensaje que se va a setear.
+     * @return AlertDialog.Builder con el título y mensaje recibido por parámetro con el botón OK.
+     */
+    public static AlertDialog.Builder getAlertDialogOk(Context context, String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
         return builder;
     }
 }

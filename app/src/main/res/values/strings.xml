@@ -15,4 +15,6 @@
     <string name="no_acepta_ml">No acepta Mercado Pago</string>
     <string name="ver_producto_en_mercado_libre">Ver producto en Mercado Libre</string>
     <string name="cargando">Cargando . . .</string>
+    <string name="informacion">Información</string>
+    <string name="ocurrio_un_error_y_no_hemos_podido_realizar_la_busqueda_solicitada_por_favor_vuelva_a_intentarlo">Ocurrió un error y no hemos podido realizar la busqueda solicitada por favor vuelva a intentarlo.</string>
 </resources>
